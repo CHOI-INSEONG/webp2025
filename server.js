@@ -10,11 +10,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 
-app.get("/", (req, res) => { res.render("index"); });
+app.get("/", (req, res) => {
+  res.render("index");
+});
 
 app.get("/search", (req, res) => {
-  const query = req.query.q || "";
-  res.render("get_result", { q });
+  const v1 = req.query.v1;
+  const v2 = req.query.v2;
+  // const query = req.query.q || "";
+  res.render("get_result", { v1, v2 });
 });
 
 app.post("/submit", (req, res) => {
@@ -25,18 +29,18 @@ app.post("/submit", (req, res) => {
 app.get("/api/data", (req, res) => {
   res.json({
     title: "서버에서 보낸 데이터입니다.",
-    timestamp: Date.now()
+    timestamp: Date.now(),
   });
 });
 
 app.post("/api/save", (req, res) => {
-  const text = req.body.text;  // fetch에서 보낸 JSON
+  const text = req.body.text; // fetch에서 보낸 JSON
   console.log("클라이언트로부터 받은 데이터:", text);
 
   res.json({
     success: true,
     received: text,
-    message: "데이터가 성공적으로 저장되었습니다."
+    message: "데이터가 성공적으로 저장되었습니다.",
   });
 });
 
